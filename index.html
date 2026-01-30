@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container header-content">
+        <div class="logo">
+          <i class="fas fa-desktop"></i>
+          <span>Обучение через скриншоты</span>
+        </div>
+
+        <div class="difficulty-selector">
+          <button class="difficulty-btn active" id="basic-btn">Базовый</button>
+          <button class="difficulty-btn" id="advanced-btn">Расширенный</button>
+        </div>
+
+        <button class="help-btn" id="help-btn">
+          <i class="fas fa-question"></i>
+        </button>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="progress-text">
+          <span id="current-step">Шаг 1 из 5</span>
+          <span id="difficulty-indicator">Уровень: Базовый</span>
+        </div>
+      </div>
+
+      <div class="screenshot-container">
+        <img
+          id="screenshot-img"
+          class="screenshot-image"
+          src=""
+          alt="Скриншот"
+        />
+        <div class="screenshot-description">
+          <h2 id="screenshot-title" class="screenshot-title">
+            Заголовок скриншота
+          </h2>
+          <p id="screenshot-text" class="screenshot-text">
+            Описание скриншота будет загружено из txt файла.
+          </p>
+        </div>
+      </div>
+
+      <div class="navigation">
+        <button class="nav-btn prev-btn" id="prev-btn" disabled>
+          <i class="fas fa-arrow-left"></i> Назад
+        </button>
+
+        <div class="voice-control">
+          <button class="voice-btn" id="voice-btn">
+            <i class="fas fa-volume-up"></i>
+          </button>
+          <span id="voice-status">Голосовое сопровождение выключено</span>
+        </div>
+
+        <button class="nav-btn next-btn" id="next-btn">
+          Далее <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>© 2025 Обучение через скриншоты. Все права защищены.</p>
+        <p>
+          Сайт разработан для удобного обучения людей компьютерной грамотности.
+        </p>
+      </div>
+    </footer>
+
+    <div class="help-overlay" id="help-overlay">
+      <div class="help-content">
+        <button class="close-help" id="close-help">
+          <i class="fas fa-times"></i>
+        </button>
+        <h2 class="help-title">Помощь по использованию сайта</h2>
+        <ul class="help-list">
+          <li>
+            Используйте кнопки <strong>"Назад"</strong> и
+            <strong>"Далее"</strong> для перемещения между скриншотами.
+          </li>
+          <li>
+            Выберите уровень сложности <strong>"Базовый"</strong> или
+            <strong>"Расширенный"</strong> в верхней части страницы.
+          </li>
+          <li>
+            Нажмите кнопку с иконкой <strong>динамика</strong> для включения
+            голосового сопровождения.
+          </li>
+          <li>
+            Следите за <strong>анимированным курсором</strong>, который покажет
+            важные элементы на скриншотах.
+          </li>
+          <li>
+            Подсветка активных зон поможет понять, на что обратить внимание.
+          </li>
+          <li>Прогресс-бар показывает, сколько шагов вы уже прошли.</li>
+          <li>
+            Для повторного открытия этого окна нажмите кнопку
+            <strong>"?"</strong> в правом верхнем углу.
+          </li>
+        </ul>
+        <p>
+          Если у вас возникли проблемы с сайтом, попробуйте обновить страницу
+          или обратитесь к администратору.
+        </p>
+      </div>
+    </div>
+
+    <div class="cursor-hint" id="cursor-hint"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
