@@ -29,6 +29,21 @@
       </div>
     </header>
 
+    <div id="task-box" class="task hidden">
+      <p id="task-text"></p>
+      <input id="task-answer" placeholder="Введите ответ" />
+      <button onclick="checkTask()">Проверить</button>
+    </div>
+
+    <div id="test-box" class="task hidden">
+      <h3>Итоговый тест</h3>
+      <p>Что нужно сделать для записи к врачу?</p>
+      <label><input type="radio" name="q1" /> Выбрать врача</label><br />
+      <label><input type="radio" name="q1" /> Удалить аккаунт</label><br />
+      <label><input type="radio" name="q1" /> Скачать приложение</label><br />
+      <button onclick="finishTest()">Завершить тест</button>
+    </div>
+
     <main class="container">
       <div class="progress-container">
         <div class="progress-bar">
