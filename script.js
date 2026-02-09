@@ -43,21 +43,19 @@ const screenshotsData = {
   advanced: [
     {
       image: "src/8.jpg",
-      title: "Когда же собака сутулая скинет мне то, что надо?",
+      title: "Получение электронного свидетельства пенсионера",
       description:
-        "Продвинутые настройки командной строки для автоматизации задач. Скриншот показывает использование переменных окружения и создание пакетных файлов. Обратите внимание на синтаксис команд и структуру каталогов.",
+        "На данном скриншоте показана инструкция от робота МАКС, как получить электронное свидетельство пенсионера",
     },
   ],
 };
 
-// Состояние приложения
 let currentStep = 0;
 let currentDifficulty = "basic";
 let isVoiceEnabled = false;
 let speech = null;
 let cursorHintTimeout = null;
 
-// Элементы DOM
 const screenshotImg = document.getElementById("screenshot-img");
 const screenshotTitle = document.getElementById("screenshot-title");
 const screenshotText = document.getElementById("screenshot-text");
@@ -75,15 +73,12 @@ const currentStepElement = document.getElementById("current-step");
 const difficultyIndicator = document.getElementById("difficulty-indicator");
 const cursorHint = document.getElementById("cursor-hint");
 
-// Инициализация голосового синтеза
 function initializeSpeech() {
   if ("speechSynthesis" in window) {
     speech = new SpeechSynthesisUtterance();
     speech.lang = "ru-RU";
     speech.rate = 0.9;
     speech.pitch = 1;
-
-    // Устанавливаем голос для русского языка
     const voices = speechSynthesis.getVoices();
     const russianVoice = voices.find((voice) => voice.lang.startsWith("ru"));
     if (russianVoice) {
@@ -96,7 +91,6 @@ function initializeSpeech() {
   }
 }
 
-// Загрузка данных скриншота
 function loadScreenshot(step) {
   const screenshots = screenshotsData[currentDifficulty];
 
@@ -107,38 +101,31 @@ function loadScreenshot(step) {
     screenshotTitle.textContent = screenshot.title;
     screenshotText.textContent = screenshot.description;
 
-    // Обновление состояния кнопок
     prevBtn.disabled = step === 0;
     nextBtn.disabled = step === screenshots.length - 1;
 
-    // Обновление прогресса
     const progress = ((step + 1) / screenshots.length) * 100;
     progressFill.style.width = `${progress}%`;
 
     currentStepElement.textContent = `Шаг ${step + 1} из ${screenshots.length}`;
     difficultyIndicator.textContent = `Уровень: ${currentDifficulty === "basic" ? "Базовый" : "Расширенный"}`;
 
-    // Остановить голос, если активен
     if (isVoiceEnabled) {
       speechSynthesis.cancel();
       setTimeout(() => speakCurrentDescription(), 300);
     }
 
-    // Показать анимированный курсор через 1 секунду
     clearTimeout(cursorHintTimeout);
     cursorHintTimeout = setTimeout(showCursorHint, 1000);
 
-    // Подсветить активные зоны
     highlightActiveAreas();
   }
 }
 
-// Показать анимированный курсор
 function showCursorHint() {
   const container = document.querySelector(".screenshot-container");
   const rect = container.getBoundingClientRect();
 
-  // Позиционируем курсор в интересной точке
   const x = rect.left + rect.width * 0.7;
   const y = rect.top + rect.height * 0.3;
 
@@ -146,7 +133,6 @@ function showCursorHint() {
   cursorHint.style.top = `${y}px`;
   cursorHint.style.opacity = "1";
 
-  // Перемещаем курсор через некоторое время
   setTimeout(() => {
     const newX = rect.left + rect.width * 0.3;
     const newY = rect.top + rect.height * 0.6;
@@ -155,19 +141,15 @@ function showCursorHint() {
     cursorHint.style.top = `${newY}px`;
   }, 1000);
 
-  // Скрыть курсор через 3 секунды
   setTimeout(() => {
     cursorHint.style.opacity = "0";
   }, 3000);
 }
 
-// Подсветка активных зон
 function highlightActiveAreas() {
-  // Убираем предыдущие подсветки
   const previousHighlights = document.querySelectorAll(".highlight");
   previousHighlights.forEach((el) => el.classList.remove("highlight"));
 
-  // Добавляем подсветку к кнопкам навигации
   setTimeout(() => {
     if (currentStep < screenshotsData[currentDifficulty].length - 1) {
       nextBtn.classList.add("highlight");
@@ -177,7 +159,6 @@ function highlightActiveAreas() {
       prevBtn.classList.add("highlight");
     }
 
-    // Убираем подсветку через 2 секунды
     setTimeout(() => {
       nextBtn.classList.remove("highlight");
       prevBtn.classList.remove("highlight");
@@ -185,7 +166,6 @@ function highlightActiveAreas() {
   }, 500);
 }
 
-// Озвучивание текущего описания
 function speakCurrentDescription() {
   if (!isVoiceEnabled || !speech) return;
 
@@ -196,7 +176,6 @@ function speakCurrentDescription() {
   speechSynthesis.speak(speech);
 }
 
-// Переключение голосового сопровождения
 function toggleVoice() {
   isVoiceEnabled = !isVoiceEnabled;
 
@@ -213,28 +192,21 @@ function toggleVoice() {
   }
 }
 
-// Смена уровня сложности
 function changeDifficulty(difficulty) {
   currentDifficulty = difficulty;
   currentStep = 0;
 
-  // Обновление кнопок
   basicBtn.classList.toggle("active", difficulty === "basic");
   advancedBtn.classList.toggle("active", difficulty === "advanced");
 
-  // Загрузка первого скриншота нового уровня
   loadScreenshot(currentStep);
 }
 
-// Инициализация приложения
 function init() {
-  // Загрузка первого скриншота
   loadScreenshot(currentStep);
 
-  // Инициализация голосового синтеза
   initializeSpeech();
 
-  // Обработчики событий
   prevBtn.addEventListener("click", () => {
     if (currentStep > 0) {
       currentStep--;
@@ -269,22 +241,18 @@ function init() {
     }
   });
 
-  // Инициализация голосов при загрузке страницы
   window.speechSynthesis.onvoiceschanged = initializeSpeech;
 
-  // Подсветка кнопки помощи при первом посещении
   setTimeout(() => {
     helpBtn.classList.add("highlight");
     setTimeout(() => helpBtn.classList.remove("highlight"), 3000);
   }, 2000);
 }
 
-// Запуск приложения после загрузки страницы
 document.addEventListener("DOMContentLoaded", init);
 
 let progressStore = JSON.parse(localStorage.getItem("progress")) || {};
 
-// восстановление прогресса
 function restoreProgress() {
   if (progressStore[currentDifficulty] !== undefined) {
     currentStep = progressStore[currentDifficulty];
@@ -292,36 +260,33 @@ function restoreProgress() {
   }
 }
 
-// сохранение
 function saveProgress() {
   progressStore[currentDifficulty] = currentStep;
   localStorage.setItem("progress", JSON.stringify(progressStore));
 }
 
-// перехват загрузки шага
 const oldLoadScreenshot = loadScreenshot;
 loadScreenshot = function (step) {
   oldLoadScreenshot(step);
   saveProgress();
 
-  // ВСЕГДА прячем практику и тест при смене шага
   const taskBox = document.getElementById("task-box");
   const testBox = document.getElementById("test-box");
   if (taskBox) taskBox.classList.add("hidden");
   if (testBox) testBox.classList.add("hidden");
 
-  // практика после 3 шага
   if (currentDifficulty === "basic" && step === 2) {
     showTask("Что нужно нажать, чтобы выбрать услугу?");
   }
 
-  // тест в конце
-  if (step === screenshotsData[currentDifficulty].length - 1) {
+  if (
+    step === screenshotsData[currentDifficulty].length - 1 &&
+    currentDifficulty == "basic"
+  ) {
     showTest();
   }
 };
 
-// ===== практика =====
 function showTask(text) {
   const box = document.getElementById("task-box");
   if (!box) return;
@@ -334,7 +299,6 @@ function checkTask() {
   document.getElementById("task-box").classList.add("hidden");
 }
 
-// ===== тест =====
 function showTest() {
   const box = document.getElementById("test-box");
   if (!box) return;
@@ -346,7 +310,6 @@ function finishTest() {
   document.getElementById("test-box").classList.add("hidden");
 }
 
-// восстановление при старте
 const oldInit = init;
 init = function () {
   oldInit();
